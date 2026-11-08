@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0d12">
+  <meta name="description" content="A real-time market dashboard for stocks, crypto, watchlists and market charts.">
+  <title>MarketPulse — Trading Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="trading.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#overview" aria-label="MarketPulse home"><span class="brand-mark">M</span><span>market<span class="brand-light">pulse</span></span></a>
+      <div class="nav-label">WORKSPACE</div>
+      <nav class="side-nav" aria-label="Dashboard navigation">
+        <a class="nav-item active" href="#overview"><span class="nav-icon">◫</span>Overview</a>
+        <a class="nav-item" href="#markets"><span class="nav-icon">⌁</span>Markets</a>
+        <a class="nav-item" href="#chart-panel"><span class="nav-icon">⌗</span>Charts</a>
+        <a class="nav-item" href="#watchlist"><span class="nav-icon">☆</span>Watchlist</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="sidebar-note"><span class="live-dot"></span><div><strong>Market data</strong><small>Live · public APIs</small></div></div>
+        <div class="profile"><div class="avatar">T</div><div><strong>Trader</strong><small>Personal workspace</small></div><span class="profile-more">···</span></div>
+      </div>
+    </aside>
+
+    <main class="main-content" id="overview">
+      <header class="topbar">
+        <button class="mobile-menu" id="menuToggle" aria-label="Toggle navigation">☰</button>
+        <div class="breadcrumb">Workspace <span>/</span> <strong>Overview</strong></div>
+        <div class="top-actions"><span class="market-status"><i></i> Markets open</span><button class="icon-button" id="refreshBtn" aria-label="Refresh market data" title="Refresh data">↻</button><div class="avatar small-avatar">T</div></div>
+      </header>
+
+      <div class="page-wrap">
+        <section class="welcome-row">
+          <div><p class="eyebrow">MONDAY, <span id="todayDate">—</span></p><h1>Market overview</h1><p class="subheading">A clear view of the markets, all in one place.</p></div>
+          <div class="updated-label"><span class="live-dot"></span><span id="updatedAt">Connecting to live data…</span></div>
+        </section>
+
+        <section class="ticker-strip" aria-label="Market index ticker">
+          <div class="ticker-head"><span class="live-dot"></span> LIVE MARKETS</div>
+          <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>{"symbols":[{"proName":"FOREXCOM:SPXUSD","title":"S&P 500"},{"proName":"NASDAQ:NDX","title":"NASDAQ 100"},{"proName":"FOREXCOM:DJI","title":"Dow Jones"},{"proName":"NASDAQ:AAPL","title":"Apple"},{"proName":"NASDAQ:NVDA","title":"NVIDIA"},{"proName":"BINANCE:BTCUSDT","title":"Bitcoin"},{"proName":"BINANCE:ETHUSDT","title":"Ethereum"}],"showSymbolLogo":true,"colorTheme":"dark","isTransparent":true,"displayMode":"adaptive","locale":"en"}</script>
+          </div>
+        </section>
+
+        <section class="stats-grid" aria-label="Market highlights">
+          <article class="stat-card"><div class="stat-top"><span>BITCOIN</span><span class="coin-icon btc">₿</span></div><div class="stat-value" id="btcPrice">Loading…</div><div class="stat-foot"><span class="change-pill" id="btcChange">—</span><span class="stat-caption">24h change</span></div></article>
+          <article class="stat-card"><div class="stat-top"><span>ETHEREUM</span><span class="coin-icon eth">◆</span></div><div class="stat-value" id="ethPrice">Loading…</div><div class="stat-foot"><span class="change-pill" id="ethChange">—</span><span class="stat-caption">24h change</span></div></article>
+          <article class="stat-card"><div class="stat-top"><span>SOLANA</span><span class="coin-icon sol">◎</span></div><div class="stat-value" id="solPrice">Loading…</div><div class="stat-foot"><span class="change-pill" id="solChange">—</span><span class="stat-caption">24h change</span></div></article>
+          <article class="stat-card market-summary"><div class="stat-top"><span>YOUR MARKET SNAPSHOT</span><span class="summary-icon">↗</span></div><div class="summary-value">Stay on top<br>of every move.</div><div class="stat-foot"><span class="stat-caption">Stocks · Crypto · Global indices</span></div></article>
+        </section>
+
+        <section class="content-grid">
+          <article class="panel chart-panel" id="chart-panel">
+            <div class="panel-heading chart-heading"><div><p class="eyebrow">PRICE ACTION</p><h2>Explore the chart</h2></div><div class="chart-controls"><label class="sr-only" for="chartSymbol">Choose chart market</label><select id="chartSymbol"><option value="NASDAQ:AAPL">Apple · AAPL</option><option value="NASDAQ:NVDA">NVIDIA · NVDA</option><option value="NASDAQ:MSFT">Microsoft · MSFT</option><option value="NASDAQ:TSLA">Tesla · TSLA</option><option value="NASDAQ:AMZN">Amazon · AMZN</option><option value="BINANCE:BTCUSDT">Bitcoin · BTC</option><option value="BINANCE:ETHUSDT">Ethereum · ETH</option><option value="BINANCE:SOLUSDT">Solana · SOL</option></select></div></div>
+            <div class="chart-frame"><div class="tradingview-widget-container chart-widget" id="tradingviewChart"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>{"autosize":true,"symbol":"NASDAQ:AAPL","interval":"D","timezone":"Etc/UTC","theme":"dark","style":"1","locale":"en","allow_symbol_change":true,"calendar":false,"support_host":"https://www.tradingview.com"}</script></div></div>
+            <p class="widget-credit">Interactive chart provided by <a href="https://www.tradingview.com/" target="_blank" rel="noopener noreferrer">TradingView</a>. Exchange data may be delayed.</p>
+          </article>
+
+          <article class="panel watchlist-panel" id="watchlist">
+            <div class="panel-heading"><div><p class="eyebrow">YOUR SHORTLIST</p><h2>Crypto watchlist</h2></div><span class="watch-count" id="watchCount">8 assets</span></div>
+            <div class="watch-tools"><label class="search-box"><span>⌕</span><input id="assetSearch" type="search" placeholder="Search assets…" aria-label="Search assets"></label><button class="filter-button" id="favoritesToggle" aria-pressed="false" title="Show favorites only">☆</button></div>
+            <div class="asset-table-wrap"><table class="asset-table"><thead><tr><th>ASSET</th><th>PRICE</th><th>24H</th><th aria-label="Favorite"></th></tr></thead><tbody id="assetRows"><tr><td colspan="4" class="loading-cell">Fetching live crypto prices…</td></tr></tbody></table></div>
+            <div class="panel-foot"><span><span class="live-dot"></span> Live prices</span><span>Updates every 15 sec</span></div>
+          </article>
+        </section>
+
+        <section class="panel stocks-panel" id="markets">
+          <div class="panel-heading"><div><p class="eyebrow">EQUITIES &amp; INDICES</p><h2>Markets at a glance</h2></div><span class="widget-tag">LIVE WIDGET</span></div>
+          <div class="tradingview-widget-container market-widget"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>{"colorTheme":"dark","dateRange":"12M","showChart":false,"locale":"en","width":"100%","height":"390","isTransparent":true,"showSymbolLogo":true,"showFloatingTooltip":false,"tabs":[{"title":"Indices","symbols":[{"s":"FOREXCOM:SPXUSD","d":"S&P 500"},{"s":"NASDAQ:NDX","d":"NASDAQ 100"},{"s":"FOREXCOM:DJI","d":"Dow Jones"},{"s":"TVC:DXY","d":"US Dollar Index"}]},{"title":"Stocks","symbols":[{"s":"NASDAQ:AAPL","d":"Apple"},{"s":"NASDAQ:NVDA","d":"NVIDIA"},{"s":"NASDAQ:MSFT","d":"Microsoft"},{"s":"NASDAQ:TSLA","d":"Tesla"},{"s":"NASDAQ:AMZN","d":"Amazon"}]},{"title":"Crypto","symbols":[{"s":"BINANCE:BTCUSDT","d":"Bitcoin"},{"s":"BINANCE:ETHUSDT","d":"Ethereum"},{"s":"BINANCE:SOLUSDT","d":"Solana"},{"s":"BINANCE:BNBUSDT","d":"BNB"}]}],"support_host":"https://www.tradingview.com"}</script></div>
+          <p class="widget-credit">Market listings and chart widgets are supplied by <a href="https://www.tradingview.com/" target="_blank" rel="noopener noreferrer">TradingView</a>; quotes can be delayed by the exchange.</p>
+        </section>
+
+        <footer class="footer"><span>MarketPulse <span class="footer-dot">·</span> Market data for informational purposes only.</span><span>Crypto prices via <a href="https://www.binance.com/en/binance-api" target="_blank" rel="noopener noreferrer">Binance public API</a> · Charts by TradingView</span></footer>
+      </div>
+    </main>
+  </div>
+  <script src="trading.js"></script>
+</body>
+</html>
